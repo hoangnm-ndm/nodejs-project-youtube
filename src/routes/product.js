@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get("/", getAll);
 router.get("/:id", getDetail);
-router.post("/create", create);
-router.put("/update", update);
-router.delete("/remove", remove);
+router.post("/", create);
+router.put("/", update);
+router.delete("/", remove);
 
 export default router;

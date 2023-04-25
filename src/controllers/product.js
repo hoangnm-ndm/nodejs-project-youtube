@@ -1,4 +1,5 @@
 import Product from "../models/product.js";
+import { productValid } from "../validation/product.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -38,8 +39,29 @@ export const getDetail = async (req, res) => {
   }
 };
 
-export const create = (req, res) => {
-  res.send("Tao san pham thanh cong");
+export const create = async (req, res) => {
+  try {
+    const { error } = productValid.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+    const product = await Product.create(req.body);
+    if (!product) {
+      return res.status(404).json({
+        message: "Tao san pham khong thanh cong",
+      });
+    }
+    return res.status(200).json({
+      message: "Tao san pham thanh cong",
+      datas: product,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
 };
 
 export const update = (req, res) => {

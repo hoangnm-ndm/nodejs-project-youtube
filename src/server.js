@@ -9,6 +9,8 @@ const URI_DB = process.env.URI_DB;
 
 connect(URI_DB);
 
+app.use(express.json());
+
 app.use("/api", router);
 
 app.listen(PORT, () => {
