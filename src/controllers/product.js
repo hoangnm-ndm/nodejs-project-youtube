@@ -64,10 +64,49 @@ export const create = async (req, res) => {
   }
 };
 
-export const update = (req, res) => {
-  res.send("Cap nhat san pham thanh cong");
+export const update = async (req, res) => {
+  try {
+    const { error } = productValid.validate(req.body, { abortEarly: false });
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!product) {
+      return res.status(404).json({
+        message: "Cap nhat san pham khong thanh cong",
+      });
+    }
+    return res.status(200).json({
+      message: "Cap nhat san pham thanh cong",
+      datas: product,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
 };
 
-export const remove = (req, res) => {
-  res.send("Xoa san pham thanh cong");
+export const remove = async (req, res) => {
+  try {
+    const data = await Product.findByIdAndDelete(req.params.id);
+    if (!data) {
+      return res.status(400).json({
+        message: "Xoa san pham khong thanh cong!",
+      });
+    }
+    return res.status(200).json({
+      message: "Xoa san pham thanh cong!",
+      datas: data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
 };
