@@ -1,37 +1,29 @@
-import Joi from "joi";
+import Joi from "joi"
 
-export const signUpValid = Joi.object({
-  name: Joi.string().required().min(3).messages({
-    "string.empty": "Name is required",
-    "any.required": "Name is required",
-    "string.min": "Name must be at least 3 characters",
-  }),
-  email: Joi.string().email().required().messages({
-    "string.empty": "Email is required",
-    "any.required": "Email is required",
-    "string.email": "Email is invalid",
-  }),
-  password: Joi.string().required().min(6).messages({
-    "string.empty": "Password is required",
-    "any.required": "Password is required",
-    "string.min": "Password must be at least 6 characters",
-  }),
-  confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
-    "any.only": "confirmPassword is not matching",
-    "string.empty": "confirmPassword is not empty",
-    "any.required": "confirmPassword is required",
-  }),
-});
+export const signUpValidator = Joi.object({
+    userName: Joi.string().required().min(6).max(255).messages({
+        "string.empty": "userName không được để trống!",
+        "any.required": "userName là bắt buộc!",
+        "string.min": "userName phải có ít nhất {#litmit} ký tự",
+        "string.max": "userName phải có ít hơn {#litmit + 1} ký tự",
+    }),
+    email: Joi.string().required().email().messages({
+        "string.empty": "Email không được để trống!",
+        "any.required": "Email là bắt buộc!",
+        "string.email": "Email không đúng định dạng"
+    }),
+    password: Joi.string().required().min(6).max(255).messages({
+        "string.empty": "Password không được để trống!",
+        "any.required": "Password là bắt buộc!",
+        "string.min": "Password phải có ít nhất {#litmit} ký tự",
+        "string.max": "Password phải có ít hơn {#litmit + 1} ký tự",
+    }),
+    confirmPassword: Joi.string().required().min(6).max(255).valid(Joi.ref("password")).messages({
+        "string.empty": "confirmPassword không được để trống!",
+        "any.required": "confirmPassword là bắt buộc!",
+        "string.min": "confirmPassword phải có ít nhất {#litmit} ký tự",
+        "string.max": "confirmPassword phải có ít hơn {#litmit + 1} ký tự",
+        "any.only": "confirmPassword không khớp với password"
+    })
+})
 
-export const signInValid = Joi.object({
-  email: Joi.string().email().required().messages({
-    "string.empty": "Email is required",
-    "any.required": "Email is required",
-    "string.email": "Email is invalid",
-  }),
-  password: Joi.string().required().min(6).messages({
-    "string.empty": "Password is required",
-    "any.required": "Password is required",
-    "string.min": "Password must be at least 6 characters",
-  }),
-});
