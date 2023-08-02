@@ -7,12 +7,12 @@ import {
   update,
 } from "../controllers/product.js";
 import { checkPermisson } from "../middlewares/checkPermission.js";
-const router = express.Router();
+const routerProduct = express.Router();
 
-router.get("/", getAll);
-router.get("/:id", getDetail);
-router.post("/", checkPermisson, create);
-router.put("/:id", checkPermisson, update);
-router.delete("/:id", checkPermisson, remove);
+routerProduct.get("/", getAll);
+routerProduct.get("/:id", getDetail);
+routerProduct.post("/", checkPermisson, create);
+routerProduct.put("/:id", checkPermisson, update);
+routerProduct.delete("/:id", checkPermisson, remove);
 
-export default router;
+export default routerProduct;

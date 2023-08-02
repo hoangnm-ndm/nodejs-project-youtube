@@ -1,21 +1,21 @@
-import Product from "../models/Product.js";
-import { productValid } from "../validation/product.js";
+import Categogy from "../models/Categogy";
+import { categoryValid } from "../validation/category";
 
 export const getAll = async (req, res) => {
   try {
-    const data = await Product.find();
+    const data = await Categogy.find();
     if (!data || data.length === 0) {
       return res.status(404).json({
-        message: "Khong tim thay san pham",
+        message: "Not found!",
       });
     }
     return res.status(200).json({
-      message: "Lay danh sach san pham thanh cong",
-      data,
+      message: "Successfully!",
+      datas: data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.name,
+      name: error.name,
       message: error,
     });
   }
@@ -23,19 +23,19 @@ export const getAll = async (req, res) => {
 
 export const getDetail = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
+    const data = await Categogy.findById(req.params.id);
+    if (!data) {
       return res.status(404).json({
-        message: "Khong tim thay san pham",
+        message: "Not found!",
       });
     }
     return res.status(200).json({
-      message: "Lay san pham thanh cong",
-      datas: product,
+      message: "Successfully!",
+      data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.name,
+      name: error.name,
       message: error,
     });
   }
@@ -43,26 +43,26 @@ export const getDetail = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const { error } = productValid.validate(req.body);
+    const { error } = categoryValid.validate(req.body);
     if (error) {
       const errors = error.details.map((err) => err.message);
       return res.status(400).json({
         message: errors,
       });
     }
-    const product = await Product.create(req.body);
-    if (!product) {
-      return res.status(404).json({
-        message: "Tao san pham khong thanh cong",
+    const data = await Categogy.create(req.body);
+    if (!data) {
+      return res.status(400).json({
+        message: "Failed!",
       });
     }
     return res.status(200).json({
-      message: "Tao san pham thanh cong",
-      datas: product,
+      message: "Successfully!",
+      data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.name,
+      name: error.name,
       message: error,
     });
   }
@@ -70,29 +70,28 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { error } = productValid.validate(req.body, { abortEarly: false });
+    const { error } = categoryValid.validate(req.body);
     if (error) {
       const errors = error.details.map((err) => err.message);
       return res.status(400).json({
         message: errors,
       });
     }
-
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+    const data = await Categogy.findByIdAndUpdate(req.params.id, req.body, {
+      abortEarly: false,
     });
-    if (!product) {
-      return res.status(404).json({
-        message: "Cap nhat san pham khong thanh cong",
+    if (!data) {
+      return res.status(400).json({
+        message: "Failed!",
       });
     }
     return res.status(200).json({
-      message: "Cap nhat san pham thanh cong",
-      datas: product,
+      message: "Successfully!",
+      data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.name,
+      name: error.name,
       message: error,
     });
   }
@@ -100,19 +99,19 @@ export const update = async (req, res) => {
 
 export const remove = async (req, res) => {
   try {
-    const data = await Product.findByIdAndDelete(req.params.id);
+    const data = await Categogy.findByIdAndDelete(req.params.id);
     if (!data) {
       return res.status(400).json({
-        message: "Xoa san pham khong thanh cong!",
+        message: "Failed!",
       });
     }
     return res.status(200).json({
-      message: "Xoa san pham thanh cong!",
-      datas: data,
+      message: "Successfully!",
+      data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.name,
+      name: error.name,
       message: error,
     });
   }

@@ -1,17 +1,14 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
       require: true,
     },
-    price: {
-      type: Number,
-      require: true,
-    },
-    description: {
+    slug: {
       type: String,
+      require: true,
     },
   },
   {
@@ -19,4 +16,4 @@ const productSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
-export default mongoose.model("Product", productSchema);
+export default mongoose.model("Category", categorySchema);
