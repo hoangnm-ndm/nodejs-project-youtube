@@ -1,10 +1,26 @@
 import Product from "../models/Product.js";
 import { productValid } from "../validation/product.js";
 
-export const getAll = async (req, res) => {
+export const getList = async (req, res) => {
   try {
-    const data = await Product.find();
-    if (!data || data.length === 0) {
+    // const data = await Product.find();
+    const {
+      _page = 1,
+      _limit = 10,
+      _sort = "createdAt",
+      _order = "asc",
+    } = req.query;
+    const options = {
+      page: _page,
+      limit: _limit,
+      sort: {
+        [_sort]: _order === "asc" ? 1 : -1,
+      },
+    };
+
+    const data = await Product.paginate({}, options);
+    console.log(data);
+    if (!data.docs || data.docs.length === 0) {
       return res.status(404).json({
         message: "Khong tim thay san pham",
       });
