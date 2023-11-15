@@ -23,6 +23,8 @@ export const getAll = async (req, res) => {
 
 export const getDetail = async (req, res) => {
   try {
+    const { name, price, desc } = req.query;
+    console.log(name);
     const data = await Categogy.findById(req.params.id);
     if (!data) {
       return res.status(404).json({
