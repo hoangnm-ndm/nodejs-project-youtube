@@ -2,11 +2,11 @@
   "name": "demo-nodejs-youtube",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --experimental-specifier-resolution=node ./src/server.js"
+    "start": "nodemon --experimental-specifier-resolution=node ./src/app.js"
   },
   "author": "hoangnm",
   "license": "ISC",
