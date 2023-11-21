@@ -6,13 +6,13 @@ import {
   remove,
   update,
 } from "../controllers/category.js";
-import { checkPermisson } from "../middlewares/checkPermission.js";
+import { checkisAdmin } from "../middlewares/checkPermission.js";
 const routerCategory = express.Router();
 
 routerCategory.get("/", getAll);
 routerCategory.get("/:id", getDetail);
-routerCategory.post("/", checkPermisson, create);
-routerCategory.put("/:id", checkPermisson, update);
-routerCategory.delete("/:id", checkPermisson, remove);
+routerCategory.post("/", checkisAdmin, create);
+routerCategory.put("/:id", checkisAdmin, update);
+routerCategory.delete("/:id", checkisAdmin, remove);
 
 export default routerCategory;

@@ -4,10 +4,15 @@ import dotenv from "dotenv";
 import router from "./routes/index.js";
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT;
-const URI_DB = process.env.URI_DB;
+const { PORT, URI_DB } = process.env;
 
-connect(URI_DB);
+connect(URI_DB)
+  .then(() => {
+    console.log("Connect DB success");
+  })
+  .catch((err) => {
+    console.log("Connect DB failed!", err);
+  });
 
 app.use(express.json());
 
